@@ -23,7 +23,7 @@ namespace ParkDataLayer.Model
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(_connectionString)
-              .LogTo(Console.WriteLine, LogLevel.Information);
+              /*.LogTo(Console.WriteLine, LogLevel.Information)*/;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

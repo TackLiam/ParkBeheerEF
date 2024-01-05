@@ -33,18 +33,36 @@ namespace ParkDataLayer.Repositories
 
         public void UpdateHuis(Huis huis)
         {
-            HuisEF  huisEF= _context.Huizen.Find(huis.Id);
+            HuisEF huisEF = _context.Huizen.Find(huis.Id);
+
+            ParkEF park = _context.Parken.FirstOrDefault(p => p.Id == huis.Park.Id);
+            if (park != null)
+            {
+                huisEF.Park = park;
+            }
+            else
+            {
+                huisEF.Park = ParkMapper.BLtoDL(huis.Park);
+            }
+
             huisEF.Straat = huis.Straat;
             huisEF.Nr = huis.Nr;
             huisEF.Actief = huis.Actief;
+
             _context.SaveChanges();
         }
 
         public void VoegHuisToe(Huis huis)
         {
             HuisEF huisEF = HuisMapper.BLtoDL(huis);
+            ParkEF park = _context.Parken.FirstOrDefault(p => p.Id == huis.Park.Id);   
+            if (park != null)
+            {
+                huisEF.Park = park;
+            }
             _context.Huizen.Add(huisEF);
             _context.SaveChanges();
         }
     }
+    
 }

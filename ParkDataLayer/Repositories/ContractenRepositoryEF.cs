@@ -17,8 +17,11 @@ namespace ParkDataLayer.Repositories
         }
         public void AnnuleerContract(Huurcontract contract)
         {
-            HuurcontractEF contractEF = HuurcontractMapper.BLtoDL(contract);
-            _context.Huurcontracten.Remove(contractEF);
+            HuurcontractEF contractEF = _context.Huurcontracten.FirstOrDefault(h => h.Id == contract.Id);
+            if(contractEF != null)
+            {
+                _context.Huurcontracten.Remove(contractEF);
+            }
             _context.SaveChanges();
         }
 
@@ -58,6 +61,23 @@ namespace ParkDataLayer.Repositories
         public void UpdateContract(Huurcontract contract)
         {
             HuurcontractEF contractEF = _context.Huurcontracten.Find(contract.Id);
+            ParkEF parkEF = _context.Parken.FirstOrDefault(p => p.Id == contract.Huis.Park.Id);
+            if (parkEF != null)
+            {
+
+                HuisEF huisEF = _context.Huizen.FirstOrDefault(h => h.Id == contract.Huis.Id);
+                if (huisEF != null)
+                {
+                    contractEF.Huis = huisEF;
+                }
+                contractEF.Huis.Park = parkEF;
+            }
+
+            HuurderEF huurderEF = _context.Huurders.FirstOrDefault(h => h.Id == contract.Huurder.Id);
+            if (huurderEF != null)
+            {
+                contractEF.Huurder = huurderEF;
+            }
             contractEF.StartDatum = contract.Huurperiode.StartDatum;
             contractEF.EindDatum = contract.Huurperiode.EindDatum;
             contractEF.AantalDagen = contract.Huurperiode.Aantaldagen;
@@ -67,6 +87,24 @@ namespace ParkDataLayer.Repositories
         public void VoegContractToe(Huurcontract contract)
         {
             HuurcontractEF contractEF = HuurcontractMapper.BLtoDL(contract);
+            ParkEF parkEF = _context.Parken.FirstOrDefault(p => p.Id == contract.Huis.Park.Id);
+            if (parkEF != null)
+            {
+
+                HuisEF huisEF = _context.Huizen.FirstOrDefault(h => h.Id == contract.Huis.Id);
+                if (huisEF != null)
+                {
+                    contractEF.Huis = huisEF;
+                }
+                contractEF.Huis.Park = parkEF;
+            }
+
+            HuurderEF huurderEF = _context.Huurders.FirstOrDefault(h => h.Id == contract.Huurder.Id);
+            if (huurderEF != null)
+            {
+                contractEF.Huurder = huurderEF;
+            }
+
             _context.Huurcontracten.Add(contractEF);
             _context.SaveChanges();
         }

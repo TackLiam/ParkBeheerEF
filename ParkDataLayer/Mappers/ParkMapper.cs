@@ -12,11 +12,28 @@ namespace ParkDataLayer.Mappers
     {
         public static Park DLtoBL(ParkEF park)
         {
-            throw new NotImplementedException();
+                    if (park == null)
+        {
+            return null;
+        }
+        Park Park = new Park(park.Id, park.Naam, park.Location);
+
+        return Park;
         }
         public static ParkEF BLtoDL(Park park)
         {
-            throw new NotImplementedException();
+            if (park == null)
+            {
+                return null;
+            }
+
+            ParkEF dataLayerPark = new ParkEF
+            {
+                Id = park.Id,
+                Naam = park.Naam,
+                Location = park.Locatie,
+            };
+            return dataLayerPark;
         }
     }
 }

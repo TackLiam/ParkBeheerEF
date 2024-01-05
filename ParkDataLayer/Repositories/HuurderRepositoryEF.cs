@@ -24,7 +24,7 @@ namespace ParkDataLayer.Repositories
         public List<Huurder> GeefHuurders(string naam)
         {
                 return _context.Huurders
-                    .Where(h => h.Naam == naam)
+                    .Where(h => h.Naam.Contains(naam))
                     .Select(HuurderMapper.DLtoBL)
                     .ToList();
         }

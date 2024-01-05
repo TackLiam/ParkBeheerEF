@@ -19,8 +19,6 @@ namespace ParkDataLayer.Model
         public int Nr { get; set; }
         [Required]
         public bool Actief { get; set; }
-
-
         public string ParkId { get; set; }
         public ParkEF Park { get; set; }
         public List<HuurcontractEF> Huurcontracten { get; set; }

@@ -10,13 +10,34 @@ namespace ParkDataLayer.Mappers
 {
     public class HuisMapper
     {
-        public static Huis DLtoBL(HuisEF huis)
+        public static Huis DLtoBL(HuisEF huisEF)
         {
-            throw new NotImplementedException();
+            if (huisEF == null)
+            {
+                return null;
+            }
+
+            Huis huis = new Huis(huisEF.Id, huisEF.Straat, huisEF.Nr, huisEF.Actief, ParkMapper.DLtoBL(huisEF.Park));
+
+            return huis;
         }
         public static HuisEF BLtoDL(Huis huis)
         {
-            throw new NotImplementedException();
+            if (huis == null)
+            {
+                return null;
+            }
+
+            HuisEF huisEF = new HuisEF
+            {
+                Id = huis.Id,
+                Straat = huis.Straat,
+                Nr = huis.Nr,
+                Actief = huis.Actief,
+                Park = ParkMapper.BLtoDL(huis.Park),
+            };
+
+            return huisEF;
         }
     }
 }
